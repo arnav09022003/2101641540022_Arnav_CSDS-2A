@@ -1,0 +1,108 @@
+    void insertAtHead(auto& head,int val){
+        auto temp=newNode();
+        temp->data=val;
+        temp->next=head;
+        head=temp;
+    }    
+    void insertAtEnd(auto& tail,int val){
+        auto temp=newNode();
+        temp->data=val;
+        temp->next=NULL;
+        tail->next=temp;
+    }
+    int deleteAtEnd(auto& head, auto& tail){
+        auto temp=head;
+        int val=tail->data;
+        while(temp->next!=tail){
+            temp=temp->next;
+        }
+        free(tail);
+        tail=temp;
+        return val;
+    }
+    int deleteAtHead(auto& head){
+        auto temp=head;
+        int val=head->data;
+        head=head->next;
+        free(temp);
+        return val;
+    }
+    void print(auto &head){
+        auto temp=head;
+        while(temp!=NULL){
+            cout<<temp->data<<' ';
+            temp=temp->next;
+        }
+    }
+    int deleteAtPos(auto& head,int val ){
+        auto temp=head;
+        if(temp->next->next==NULL){
+            int value=temp->data;
+            head=head->next;
+            free(temp);
+            return value;
+        }
+        while(temp->next->next->data!=val){
+            temp=temp->next;
+        }
+        auto temp1=temp->next;
+        int value=temp1->data;
+        temp->next=temp->next->next;
+        free(temp1);
+        return value;
+    }
+    void insertAtPos(auto& head,int val){
+        auto temp=head;
+        while(temp->next->data!=val){
+            temp=temp->next;
+        }
+        auto node=newNode();
+        node->data=val;
+        node->next=temp->next;
+        temp->next=node;
+    }
+    int dataAtMid_slowFast(auto& head){
+        auto slow=head,fast=head;
+        while(fast!=NULL && fast->next!=NULL){
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        return slow->data;
+    }
+    int dataAtMid_count(auto& head){
+        int n=0;
+        auto temp=head;
+        while(temp!=NULL){
+            n++;
+            temp=temp->next;
+        }
+        temp=head;
+        if(n%2==0){
+            n--;
+        }
+        n/=2;
+        while(n--){
+            temp=temp->next;
+        }
+        return temp->data;
+    }
+    int elementAtkPos(auto& head,int k){
+        auto slow=head,fast=head;
+        k--;
+        while(k--){
+            fast=fast->next;
+        }
+        while(fast->next!=NULL){
+            slow=slow->next;
+            fast=fast->next;
+        }
+        return slow->data;
+    }
+    Node * reverseLinkedList(Node *head){
+        if(!head || !head->next)
+            return head;
+        Node *newHead = reverseLinkedList(head->next);
+        head->next->next = head;
+        head->next = NULL;
+        return newHead;
+    }
